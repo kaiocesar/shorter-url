@@ -1,27 +1,18 @@
-import validators
-from flask import Flask, request
-from sqlalchemy import create_engine, Column, Table, String, MetaData, Integer
+from flask import Flask
+from flask import request
+from src.shorter import Shorter
 
 app = Flask(__name__)
-engine = create_engine('sqlite:///:memory:', echo=True)
 
-def validate_url(url):
-    pass
-
-@app.route('/')
-def index():
-    return "<h1>Shorter URL</h1>"
-
-@app.route('/shorter', methods=['POST'])
-def shorter():
-    # get the url
+@app.route('/', methods=['POST'])
+def shorter_url():
     url = request.args.get('url', '')
+    return 'url {}'.format(url)
 
-    # validate the url
-    if not validators.url(url):
-        return 'Invalid url'
-    
-    # register the url on database
+@app.route('/s/<code>')
+def open_shorter_url(code):
+    shorter_url = Shorter(code)
+    return shorter_url.get_url()
 
-    # return the shorter link
-    return 'testng..'
+if __name__ == '__main__':
+    app.run(debug=True)
