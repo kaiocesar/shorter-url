@@ -12,7 +12,7 @@ def shorter_url():
 @app.route('/s/<code>')
 def open_shorter_url(code):
     shorter_url = Shorter(code)
-    return shorter_url.get_url()
+    return shorter_url.get_code()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
