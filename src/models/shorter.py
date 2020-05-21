@@ -1,0 +1,2 @@
+class ShorterModel:
+    pass
